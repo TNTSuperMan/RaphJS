@@ -5,11 +5,12 @@ import { updateChild } from "./update";
 
 const createDF = doc.createDocumentFragment.bind(doc);
 
-export const reactiveFragment = (children: (() => XNode[])) => {
+export const reactiveFragment = (children: (() => XNode[] | XNode)) => {
     const el = createDF();
     let before: XNode[] = [];
     hook(()=>{
-        const after = children();
+        const child = children();
+        const after = Array.isArray(child) ? child : [child];
         updateChild(el, before, after);
         before = after;
     })
