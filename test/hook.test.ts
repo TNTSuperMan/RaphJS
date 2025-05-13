@@ -24,4 +24,18 @@ describe("hook", () => {
         state.value = { value: 1 };
         expect(edits).toEqual([0, 1]);
     })
+    test("manylayer change", () => {
+        const state = ref({value: { value: 0 }});
+        const edits: number[] = [];
+        hook(() => edits.push(state.value.value.value));
+        state.value.value.value = 1;
+        expect(edits).toEqual([0, 1]);
+    })
+    test("manylayer hard change", () => {
+        const state = ref({value: { value: 0 }});
+        const edits: number[] = [];
+        hook(() => edits.push(state.value.value.value));
+        state.value = { value: { value: 1 } };
+        expect(edits).toEqual([0, 1]);
+    })
 })
