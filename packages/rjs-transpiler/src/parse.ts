@@ -6,14 +6,14 @@ import { JSXFrag2Token } from "./jsx/fragment";
 
 const jsxParser = Parser.extend(jsx());
 
-export const parseJSX = (code: string) => {
+export const parseJSX = (code: string, module = "rjs") => {
     const ast = jsxParser.parse(code, {ecmaVersion: "latest", sourceType: "module"});
 
     ast.body.unshift({
         type: "ImportDeclaration",
         source: {
             type: "Literal",
-            value: "rjs",
+            value: module,
             start: 0, end: 0
         },
         start: 0, end: 0,
