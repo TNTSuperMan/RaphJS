@@ -14,13 +14,31 @@ export const id = "$" + Array(5).fill(0).map(()=>Math.round(Math.random()*35).to
 export const JSXChild2Token = (token: JSXChild): (Expression|SpreadElement)[] => {
     switch(token.type){
         case "JSXElement": return [JSXEl2Token(token)];
-        case "JSXExpressionContainer": return [token.expression];
         case "JSXFragment": return token.children.map(e=>JSXChild2Token(e)).flat();
         case "JSXText": return [{
             type: "Literal",
             value: token.value.trim(),
             start: token.start,
             end: token.end
+        }];
+        case "JSXExpressionContainer": return [{
+            ...pos(token),
+            type: "CallExpression",
+            optional: false,
+            callee: {
+                ...pos(token),
+                type: "Identifier",
+                name: "reactiveFragment" + id
+            },
+            arguments: [{
+                ...pos(token),
+                type: "ArrowFunctionExpression",
+                params: [],
+                generator: false,
+                async: false,
+                expression: true,
+                body: token.expression
+            }]
         }];
     }
 }
