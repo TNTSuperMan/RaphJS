@@ -1,0 +1,13 @@
+{
+  "name": "rjs",
+  "description": "New frontend framework. simple, react, fast.",
+  "version": "0.0.0",
+  "main": "dist/cjs.js",
+  "module": "dist/esm.js",
+  "types": "dist/types/index.d.ts",
+  "type": "module",
+  "author": "TNTSuperMan",
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

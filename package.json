@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "packageManager": "bun@1.2.13",
+  "workspaces": ["./packages/*"],
+  "name": "rjs-workspace",
+  "version": "0.0.0",
+  "main": "dist/cjs.js",
+  "module": "dist/esm.js",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.15.17"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "rjs": "workspace:*",
+    "rjs-transpiler": "workspace:*"
+  },
+  "scripts": {
+    "build": "bun scripts/build"
+  },
+  "type": "module",
+  "types": "dist/types/index.d.ts"
+}
