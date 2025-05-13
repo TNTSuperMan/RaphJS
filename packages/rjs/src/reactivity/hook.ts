@@ -1,6 +1,6 @@
 export const hook_funcs = new WeakMap<WeakKey, [()=>void, (()=>void)?]>();
 export const hook_states: symbol[] = [];
-export const available_hooks = new WeakSet();
+export const available_hooks = new WeakSet;
 
 export const rehook = (id: symbol) => {
     const [target, effect] = hook_funcs.get(id) ?? [];
