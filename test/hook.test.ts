@@ -10,28 +10,28 @@ describe("hook", () => {
         state.value = 1;
         expect(edits).toEqual([0, 1]);
     })
-    test("subobj change", () => {
+    test("child change", () => {
         const state = ref({value: 0});
         const edits: number[] = [];
         hook(() => edits.push(state.value.value));
         state.value.value = 1;
         expect(edits).toEqual([0, 1]);
     })
-    test("subobj hard change", () => {
+    test("child hard change", () => {
         const state = ref({value: 0});
         const edits: number[] = [];
         hook(() => edits.push(state.value.value));
         state.value = { value: 1 };
         expect(edits).toEqual([0, 1]);
     })
-    test("manylayer change", () => {
+    test("descendant change", () => {
         const state = ref({value: { value: 0 }});
         const edits: number[] = [];
         hook(() => edits.push(state.value.value.value));
         state.value.value.value = 1;
         expect(edits).toEqual([0, 1]);
     })
-    test("manylayer hard change", () => {
+    test("descendant hard change", () => {
         const state = ref({value: { value: 0 }});
         const edits: number[] = [];
         hook(() => edits.push(state.value.value.value));
