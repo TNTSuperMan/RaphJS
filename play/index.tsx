@@ -1,11 +1,11 @@
-import { hook, reactive, reactiveFragment, ref } from "rjs"
+import { ref } from "rjs/src"
 
-const App = (): Node => {
-    const message = ref("");
+const App = () => {
+    const count = ref(0);
     return <div>
-        {message.value}
-        <input type="text" value={message.value} $input={e=>message.value=(e.target as HTMLInputElement).value} />
+        Count: {count.value}<br/>
+        <button $click={()=>count.value++}>Add</button>
     </div>
 }
 
-document.body.append(App());
+document.body.append(<App/>);
