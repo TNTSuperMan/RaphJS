@@ -30,19 +30,36 @@ export const JSXEl2StaticToken = (token: JSXElement): Expression => {
         end: token.end
     };
     token.openingElement.attributes.forEach(e=>{
-        transpiledToken.callee = {
-            ...pos(e),
-            type: "MemberExpression",
-            property: e.value.type == "JSXExpressionContainer" ? e.value.expression : e.value,
-            computed: true,
-            optional: false,
-            object: {
-                ...pos(e.name),
+        if(e.name.name.startsWith("$")){
+            transpiledToken.callee = {
+                ...pos(e),
+                type: "CallExpression",
+                optional: false,
+                callee: {
+                    ...pos(e.name),
+                    type: "MemberExpression",
+                    object: transpiledToken.callee,
+                    property: { ...pos(e.name), type: "Literal", value: e.name.name.startsWith("$") ? e.name.name.substring(1) : e.name.name },
+                    computed: true,
+                    optional: false
+                },
+                arguments: [e.value.type == "JSXExpressionContainer" ? e.value.expression : e.value]
+            }
+        }else{
+            transpiledToken.callee = {
+                ...pos(e),
                 type: "MemberExpression",
-                object: transpiledToken.callee,
-                property: { ...pos(e.name), type: "Literal", value: e.name.name.startsWith("$") ? e.name.name.substring(1) : e.name.name },
+                property: e.value.type == "JSXExpressionContainer" ? e.value.expression : e.value,
                 computed: true,
-                optional: false
+                optional: false,
+                object: {
+                    ...pos(e.name),
+                    type: "MemberExpression",
+                    object: transpiledToken.callee,
+                    property: { ...pos(e.name), type: "Literal", value: e.name.name.startsWith("$") ? e.name.name.substring(1) : e.name.name },
+                    computed: true,
+                    optional: false
+                }
             }
         }
     })
