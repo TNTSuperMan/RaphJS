@@ -7,11 +7,13 @@ const createDF = doc.createDocumentFragment.bind(doc);
 
 export const reactiveFragment = (children: (() => XNode[] | XNode)) => {
     const el = createDF();
+    const mark = doc.createComment("");
+    el.append(mark);
     let before: XNode[] = [];
     hook(()=>{
         const child = children();
         const after = Array.isArray(child) ? child : [child];
-        updateChild(el, before, after);
+        updateChild(mark, before, after);
         before = after;
     })
     return el;

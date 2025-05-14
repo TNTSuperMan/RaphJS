@@ -25,11 +25,13 @@ type ELMethodType<S, T extends HTMLElement = HTMLElement,> = (
 
 const elMethod: ELMethodType<String> = function(children, attrs = {}, events = {}){
     const el = createEl(String(this));
+    const mark = doc.createComment("");
+    el.append(mark);
 
     let before: XNode[] = [];
     hook(()=>{
         const after = children();
-        updateChild(el, before, after);
+        updateChild(mark, before, after);
         before = after;
     })
 
