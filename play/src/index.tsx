@@ -1,15 +1,21 @@
 import { ref } from "../../packages/rjs/src"
 
 const App = () => {
-    const tasks = ref([] as [boolean, string][]);
+    const tasks = ref([] as string[]);
     const msg = ref("");
     return <div>
         <ul>{tasks.value.map((e,i)=><li>
-            <input type="checkbox" checked={e[0]} $change={e=>tasks.value[i]![0] = (e.target as HTMLInputElement).checked} />
-            {tasks.value[i]![1]}
+            <button $click={()=>tasks.value.splice(i, 1)}>X</button>
+            {tasks.value[i]}
         </li>)}</ul>
-        <input type="text" value={msg.value} $input={e=>msg.value = (e.target as HTMLInputElement).value} />
-        <button $click={()=>tasks.value.push([false, msg.value])}>Add</button>
+        <form $submit={e=>{
+                tasks.value.push(msg.value)
+                msg.value = "";
+                e.preventDefault();
+            }}>
+            <input type="submit" value="+" />
+            <input type="text" value={msg.value} $input={e=>msg.value = (e.target as HTMLInputElement).value} />
+        </form>
     </div>
 }
 
