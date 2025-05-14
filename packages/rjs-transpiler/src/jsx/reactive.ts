@@ -27,7 +27,7 @@ export const JSXEl2ReactiveToken = (token: JSXElement): Expression => {
                 kind: "init",
                 method: false,
                 shorthand: false,
-                computed: true,
+                computed: false,
                 key: {
                     ...pos(e.name),
                     type: "Literal",
