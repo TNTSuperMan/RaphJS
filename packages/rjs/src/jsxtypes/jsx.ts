@@ -12,6 +12,7 @@ declare global {
             ul: Attributes;
             ol: Attributes;
             li: Attributes;
+            br: Attributes;
             button: Attributes;
             a: Attributes<{
                 href: string;
