@@ -30,6 +30,7 @@ export const esbuild_RjsJSX: (module?: string) => (ESBuildPlugin & BunPlugin) = 
 
 export const rollup_RjsJSX: (module?: string) => RollupPlugin = (module) => ({
     name: "rollup-RjsJSX",
+    enforce: "pre",
     transform(code, id){
         if(id.endsWith(".jsx")){
             return {
@@ -42,5 +43,5 @@ export const rollup_RjsJSX: (module?: string) => RollupPlugin = (module) => ({
                 moduleSideEffects: true
             }
         }
-    }
+    },
 })
